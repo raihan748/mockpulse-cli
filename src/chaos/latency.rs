@@ -85,18 +85,18 @@ impl LatencyEngine {
                 .parse::<f64>()
                 .map(|f| f.max(0.0) as u64)
                 .map_err(|e| format!("Invalid ms duration '{}': {}", s, e))
-        } else if let Some(num_str) = trimmed.strip_suffix('s') {
-            num_str
-                .trim()
-                .parse::<f64>()
-                .map(|f| (f.max(0.0) * 1000.0) as u64)
-                .map_err(|e| format!("Invalid second duration '{}': {}", s, e))
         } else if let Some(num_str) = trimmed.strip_suffix("us") {
             num_str
                 .trim()
                 .parse::<f64>()
                 .map(|f| (f.max(0.0) / 1000.0) as u64)
                 .map_err(|e| format!("Invalid us duration '{}': {}", s, e))
+        } else if let Some(num_str) = trimmed.strip_suffix('s') {
+            num_str
+                .trim()
+                .parse::<f64>()
+                .map(|f| (f.max(0.0) * 1000.0) as u64)
+                .map_err(|e| format!("Invalid second duration '{}': {}", s, e))
         } else {
             // Assume raw milliseconds if no suffix
             trimmed
