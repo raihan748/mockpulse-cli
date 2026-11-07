@@ -1,0 +1,1 @@
+//! Mock synthesizer module.
