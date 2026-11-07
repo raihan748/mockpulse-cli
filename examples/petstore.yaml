@@ -1,0 +1,98 @@
+openapi: "3.0.3"
+info:
+  title: "Swagger Petstore - MockPulse Showcase"
+  version: "1.0.0"
+  description: "Sample API specification for demonstrating MockPulse zero-config mock server capabilities."
+paths:
+  /api/v1/pets:
+    get:
+      summary: "List all pets"
+      operationId: "listPets"
+      responses:
+        "200":
+          description: "An array of pet objects"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+    post:
+      summary: "Create a new pet"
+      operationId: "createPet"
+      responses:
+        "201":
+          description: "Pet successfully created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+  /api/v1/pets/{petId}:
+    get:
+      summary: "Info for a specific pet"
+      operationId: "showPetById"
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: "Expected response to a valid request"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+  /api/v1/status:
+    get:
+      summary: "System health status"
+      responses:
+        "200":
+          description: "Health status"
+          content:
+            application/json:
+              example:
+                status: "healthy"
+                cluster: "us-east-1"
+                version: "v2.4.0"
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - id
+        - name
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        category:
+          type: string
+          enum:
+            - dog
+            - cat
+            - bird
+            - reptile
+        age:
+          type: integer
+          minimum: 1
+          maximum: 20
+        vaccinated:
+          type: boolean
+        ownerEmail:
+          type: string
+          format: email
+        registeredAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - available
+            - pending
+            - adopted
